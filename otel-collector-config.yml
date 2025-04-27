@@ -1,0 +1,21 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: ":4317"
+      http:
+        endpoint: ":4318"
+
+exporters:
+  loki:
+    endpoint: "http://localhost:3100/loki/api/v1/push"
+    labels:
+      job: "otel-collector"
+    username: "<loki-username>"
+    password: "<loki-password>"
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [loki]

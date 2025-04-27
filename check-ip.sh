@@ -55,4 +55,6 @@ echo "$IPS"
 
 echo ""
 echo "📍 Localização do primeiro IP ($FIRST_IP):"
+echo "{\"timestamp\":\"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\",\"domain\":\"$DOMAIN\",\"final_url\":\"$FINAL_URL\",\"first_ip\":\"$FIRST_IP\",\"ips\":\"$(echo $IPS | tr '\n' ',' | sed 's/,$//')\"}"
+
 curl -s --max-time 5 https://ipinfo.io/$FIRST_IP

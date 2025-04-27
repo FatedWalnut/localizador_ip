@@ -1,11 +1,11 @@
-FROM alpine:latest
+FROM python:3.11-alpine
 
-# Instala apenas o necessário
-RUN apk add --no-cache bind-tools curl
+# Instala dependências
+RUN pip install fastapi uvicorn prometheus-fastapi-instrumentator opentelemetry-api opentelemetry-sdk opentelemetry-instrumentation-fastapi opentelemetry-exporter-otlp requests
 
-# Copia o script
-COPY check-ip.sh /check-ip.sh
-RUN chmod +x /check-ip.sh
+# Cria e configura a app
+COPY . /app
+WORKDIR /app
 
-# Roda o script com domínio como argumento
-ENTRYPOINT ["/check-ip.sh"]
+# Comando para rodar a aplicação
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
